@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.bruno.webspring.domain.enums.TipoCliente;
 
@@ -31,8 +31,8 @@ public class Cliente implements Serializable  {
 	private Integer tipo;
 	
 	
-	@ManyToMany(mappedBy="cliente")
-	private List<Endereco>endereco=new ArrayList<>();
+	@OneToMany(mappedBy="cliente")
+	private List<Endereco>enderecos=new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -92,11 +92,11 @@ public class Cliente implements Serializable  {
 	}
 
 	public List<Endereco> getEndereco() {
-		return endereco;
+		return enderecos;
 	}
 
 	public void setEndereco(List<Endereco> endereco) {
-		this.endereco = endereco;
+		this.enderecos = endereco;
 	}
 
 	public Set<String> getTelefones() {
