@@ -1,5 +1,6 @@
 package com.bruno.webspring;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -13,6 +14,7 @@ import com.bruno.webspring.domain.Cidade;
 import com.bruno.webspring.domain.Cliente;
 import com.bruno.webspring.domain.Endereco;
 import com.bruno.webspring.domain.Estado;
+import com.bruno.webspring.domain.ItemPedido;
 import com.bruno.webspring.domain.Pagamento;
 import com.bruno.webspring.domain.PagamentoComBoleto;
 import com.bruno.webspring.domain.PagamentoComCartao;
@@ -25,6 +27,7 @@ import com.bruno.webspring.repositories.CidadeRepository;
 import com.bruno.webspring.repositories.ClienteRepository;
 import com.bruno.webspring.repositories.EnderecoRepository;
 import com.bruno.webspring.repositories.EstadoRepository;
+import com.bruno.webspring.repositories.ItemPedidoRepository;
 import com.bruno.webspring.repositories.PagamentoRepository;
 import com.bruno.webspring.repositories.PedidoRepository;
 import com.bruno.webspring.repositories.ProdutoRepository;
@@ -55,6 +58,10 @@ public class WebSpringApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentorepository;
+	
+	
+	@Autowired
+	private ItemPedidoRepository itempedidorepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebSpringApplication.class, args);
@@ -131,6 +138,21 @@ public class WebSpringApplication implements CommandLineRunner {
 	
 	pagamentorepository.saveAll(Arrays.asList(pagto1,pagto2));
 	
+	
+	ItemPedido ip1=new ItemPedido(ped1,p1,0.00,1,2000.00);
+	ItemPedido ip2=new ItemPedido(ped1,p3,0.00,2,80.00);
+	ItemPedido ip3=new ItemPedido(ped2,p2,100.00,1,800.00);
+	
+	ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+	ped2.getItens().addAll(Arrays.asList(ip3));
+	
+	
+	p1.getItens().addAll(Arrays.asList(ip1));
+	p2.getItens().addAll(Arrays.asList(ip3));
+	p3.getItens().addAll(Arrays.asList(ip2));
+	
+	
+	itempedidorepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }
